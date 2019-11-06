@@ -1,0 +1,193 @@
+知识点回顾
+maven坐标和仓库
+  坐标
+    x,y=======>确定平面上的唯一一点
+	x,y,z======》确定空间上的唯一一点
+	
+  对于maven而言：
+    通过groupId、artifactId、version这三个标签我们就可以确定jar、war包在本地仓库中的位置！
+    <groupId>com.offcn.maven</groupId>
+    <artifactId>HelloFriend</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+   
+    规范：
+	  groupId--------->公司域名的反写+项目名[com.offcn.crm]
+	  artifactId------>项目名-模块名[crm-user、crm-privileage]
+	  version--------->版本号
+	            SnapShot 快照
+				alpha 内部测试
+				beta公测
+				Release 稳定版
+				GA正式发布
+	  简称：GAV
+	  
+	如何通过maven坐标确定当前工程的jar、war包在本地仓库中的位置呢？
+  	
+	  com/offcn/maven/HelloFriend/0.0.1-SNAPSHOT/HelloFriend-0.0.1-SNAPSHOT.jar
+	  
+    反过来，如果知道本地仓库中jar包的位置，能写出maven项目的坐标不？
+	 首先确定version标签--->artifactId--->groupId
+	 
+
+  仓库
+     本地仓库
+	   
+	 远程仓库
+	    私服【nexus】：每个公司都有一个私服
+		中央仓库：全世界就这么一个仓库，在美国
+		镜像仓库:在每个洲有中央仓库的一个镜像，里面的内容和中央仓库的内容是一致的，便于加快下载速度，减轻中央仓库的压力！
+		
+
+	更改远程仓库位置
+	           <mirror>
+			      <id>nexus-aliyun</id>          #镜像仓库的id
+			      <mirrorOf>*</mirrorOf>         #默认全球中央仓库的名字就是central
+			      <name>Nexus aliyun</name>      #镜像仓库的名字
+			      <url>http://maven.aliyun.com/nexus/content/groups/public</url>
+			   </mirror>
+	   
+	获取jar包的仓库地址
+	
+	
+
+	如何查找指定jar包的坐标：
+				http://search.maven.org/
+				http://mvnrepository.com/【建议使用这个】
+
+
+  Eclipse整合Maven
+
+  maven项目打包：
+    jar包：将当前工程打成jar包，就意味着别的工程可以依赖当前工程！
+	pom包:创建父工程及聚合工程的时候会用到
+	war包：将当前工程打成war包,就意味着该工程可以部署到tomcat服务器上！
+	
+	
+  pom.xml文件解析
+    标签
+	
+ 
+  依赖范围
+  
+  
+  依赖传递的原则:
+	  1.路径相同时，先声明者优先
+	  2.路径不同时，近者优先
+	  
+	  
+  jar包冲突的三种解决方案：
+  
+      1.路径相同时，先声明者优先
+	  2.路径不同时，近者优先
+	  
+	  3.排除原则
+	  
+	    <exclusions>
+		  <exclusion>
+		    <groupId>junit</groupId>
+		    <artifactId>junit</artifactId>
+		  </exclusion>
+		</exclusions>
+
+	Maven的生命周期和插件
+	
+    maven的三大生命周期：
+	  clean:清理当前项目
+	     mvn clean
+	  default:用来构建当前项目
+	     mvn compile
+		 mvn test
+		 mvn package
+		 mvn install
+		 
+		 mvn deploy--->部署
+		 
+	  site:用来构建站点信息
+	    mvn site
+		
+	插件：
+     mvn compile
+		 mvn命令是maven的主程序，maven的主程序控制着maven主程序的调用
+		 compile是子命令，是负责具体做事的，该compile命令负责编译，找到对应的compile插件来编译
+
+    
+		在pom.xml中添加如下代码
+			<build>
+				<!-- 配置了很多插件JDK1.7 -->
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<version>3.5.1</version>  
+						<configuration>
+							<source>1.7</source>
+							<target>1.7</target>
+							<encoding>UTF-8</encoding>
+						</configuration>
+					</plugin>
+					<!-- tomcat7的插件-->
+					<plugin>
+						<groupId>org.apache.tomcat.maven</groupId>
+						<artifactId>tomcat7-maven-plugin</artifactId>
+						<version>2.2</version>
+						<configuration>
+							<path>/ssm</path>
+							<port>8888</port>
+						</configuration>
+					  </plugin>
+				</plugins>
+			</build>
+	  
+	
+  聚合和继承
+   继承：重复利用代码
+     父工程必须是pom工程
+	 
+  聚合：将多个maven项目进行统一管理,
+  聚合工程：pom工程
+
+  使用maven构建web项目
+  
+  
+  
+  maven整合ssm
+   spring、springmvc、mybatis、数据库连接池、数据库驱动包、json数据、jstl
+  
+
+打断点
+
+jdk在settings.xml文件中统一设置为jdk1.7/jdk1.8
+<profile>
+	 <id>jdk-1.7</id>
+	 <activation>
+		<activeByDefault>true</activeByDefault>
+		<jdk>1.7</jdk>                                           #指定jdk的版本为1.7,
+	 </activation>
+	 <properties>
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.compilerVersion>1.7</maven.compiler.compilerVersion>
+	 </properties>
+   </profile>
+
+tomcat插件
+<!-- tomcat7的插件-->
+<plugin>
+	<groupId>org.apache.tomcat.maven</groupId>
+	<artifactId>tomcat7-maven-plugin</artifactId>
+	<version>2.2</version>
+	<configuration>
+		<path>/ssm</path>
+		<port>8888</port>
+	</configuration>
+  </plugin>
+  
+ tomcat7:run
+
+scope范围
+
+
+分模块开发
+  
+  
+  

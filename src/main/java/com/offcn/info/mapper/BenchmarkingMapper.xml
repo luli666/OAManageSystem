@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.offcn.info.mapper.BenchmarkingMapper" >
+  <resultMap id="BaseResultMap" type="com.offcn.info.bean.Benchmarking" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="comname" property="comname" jdbcType="VARCHAR" />
+    <result column="sales_anount" property="salesAnount" jdbcType="DOUBLE" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="business" property="business" jdbcType="VARCHAR" />
+    <result column="priority" property="priority" jdbcType="VARCHAR" />
+    <result column="disadvantage" property="disadvantage" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="emp_count" property="empCount" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="DATE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, comname, sales_anount, year, business, priority, disadvantage, status, emp_count, 
+    createtime, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.offcn.info.bean.BenchmarkingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from benchmarking
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from benchmarking
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from benchmarking
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.offcn.info.bean.BenchmarkingExample" >
+    delete from benchmarking
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.offcn.info.bean.Benchmarking" >
+    insert into benchmarking (id, comname, sales_anount, 
+      year, business, priority, 
+      disadvantage, status, emp_count, 
+      createtime, remark)
+    values (#{id,jdbcType=INTEGER}, #{comname,jdbcType=VARCHAR}, #{salesAnount,jdbcType=DOUBLE}, 
+      #{year,jdbcType=INTEGER}, #{business,jdbcType=VARCHAR}, #{priority,jdbcType=VARCHAR}, 
+      #{disadvantage,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{empCount,jdbcType=INTEGER}, 
+      #{createtime,jdbcType=DATE}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.offcn.info.bean.Benchmarking" >
+    insert into benchmarking
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="comname != null" >
+        comname,
+      </if>
+      <if test="salesAnount != null" >
+        sales_anount,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="business != null" >
+        business,
+      </if>
+      <if test="priority != null" >
+        priority,
+      </if>
+      <if test="disadvantage != null" >
+        disadvantage,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="empCount != null" >
+        emp_count,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="comname != null" >
+        #{comname,jdbcType=VARCHAR},
+      </if>
+      <if test="salesAnount != null" >
+        #{salesAnount,jdbcType=DOUBLE},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="business != null" >
+        #{business,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        #{priority,jdbcType=VARCHAR},
+      </if>
+      <if test="disadvantage != null" >
+        #{disadvantage,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="empCount != null" >
+        #{empCount,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.offcn.info.bean.BenchmarkingExample" resultType="java.lang.Integer" >
+    select count(*) from benchmarking
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update benchmarking
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.comname != null" >
+        comname = #{record.comname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesAnount != null" >
+        sales_anount = #{record.salesAnount,jdbcType=DOUBLE},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.business != null" >
+        business = #{record.business,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priority != null" >
+        priority = #{record.priority,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disadvantage != null" >
+        disadvantage = #{record.disadvantage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empCount != null" >
+        emp_count = #{record.empCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=DATE},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update benchmarking
+    set id = #{record.id,jdbcType=INTEGER},
+      comname = #{record.comname,jdbcType=VARCHAR},
+      sales_anount = #{record.salesAnount,jdbcType=DOUBLE},
+      year = #{record.year,jdbcType=INTEGER},
+      business = #{record.business,jdbcType=VARCHAR},
+      priority = #{record.priority,jdbcType=VARCHAR},
+      disadvantage = #{record.disadvantage,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      emp_count = #{record.empCount,jdbcType=INTEGER},
+      createtime = #{record.createtime,jdbcType=DATE},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.offcn.info.bean.Benchmarking" >
+    update benchmarking
+    <set >
+      <if test="comname != null" >
+        comname = #{comname,jdbcType=VARCHAR},
+      </if>
+      <if test="salesAnount != null" >
+        sales_anount = #{salesAnount,jdbcType=DOUBLE},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="business != null" >
+        business = #{business,jdbcType=VARCHAR},
+      </if>
+      <if test="priority != null" >
+        priority = #{priority,jdbcType=VARCHAR},
+      </if>
+      <if test="disadvantage != null" >
+        disadvantage = #{disadvantage,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="empCount != null" >
+        emp_count = #{empCount,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=DATE},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.offcn.info.bean.Benchmarking" >
+    update benchmarking
+    set comname = #{comname,jdbcType=VARCHAR},
+      sales_anount = #{salesAnount,jdbcType=DOUBLE},
+      year = #{year,jdbcType=INTEGER},
+      business = #{business,jdbcType=VARCHAR},
+      priority = #{priority,jdbcType=VARCHAR},
+      disadvantage = #{disadvantage,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      emp_count = #{empCount,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=DATE},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
